@@ -156,16 +156,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;op
 .hero-meta{display:flex;gap:28px;margin-top:48px;padding-top:28px;border-top:1px solid var(--line);max-width:520px}
 .hero-meta div{font-size:13px;color:var(--muted);line-height:1.45}
 .hero-meta strong{display:block;font-family:var(--display);font-size:15px;color:#fff;font-weight:700;letter-spacing:.01em;margin-bottom:2px}
-.hero-stage{position:relative;height:min(88svh,860px);min-height:520px}
-#hero3d{position:absolute;inset:0;width:100%;height:100%;cursor:grab;-webkit-mask-image:radial-gradient(ellipse 62% 60% at 50% 52%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 62% 60% at 50% 52%,#000 58%,transparent 100%)}
-#hero3d:active{cursor:grabbing}
 .stage-fallback{position:absolute;inset:0;display:none;place-items:center;color:var(--muted);font-size:14px}
-.sweep-ui{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(440px,84%);z-index:3}
-.sweep-ui .labels{display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#aaa8a2;margin-bottom:12px}
-.sweep-ui .hint{text-align:center;font-size:12px;color:#8f8d88;margin-top:12px;letter-spacing:.04em}
-input[type=range].sweep{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:linear-gradient(90deg,#fff var(--p,0%),rgba(255,255,255,.2) var(--p,0%));border-radius:2px;outline:none;cursor:pointer}
-input[type=range].sweep::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:6px solid #0a0a0a;box-shadow:0 0 0 1px #fff,0 6px 20px rgba(0,0,0,.6)}
-input[type=range].sweep::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:6px solid #0a0a0a;box-shadow:0 0 0 1px #fff}
 .scroll-cue{position:absolute;left:var(--pad);bottom:28px;z-index:3;display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#8f8d88}
 .scroll-cue i{width:1px;height:38px;background:linear-gradient(#fff,transparent);animation:cue 2.2s infinite}
 @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
@@ -370,7 +361,6 @@ footer{padding:clamp(70px,9vw,120px) 0 36px;border-top:1px solid var(--line)}
   .burger{display:block}
   .hero{grid-template-columns:1fr;min-height:auto;padding-top:96px}
   .hero-copy{padding:10px var(--pad) 0;max-width:none}
-  .hero-stage{height:62svh;min-height:420px;margin-top:4px}
   .hero-meta{max-width:none}
   .scroll-cue{display:none}
   .sec-head{grid-template-columns:1fr;gap:18px}
@@ -418,11 +408,7 @@ footer{padding:clamp(70px,9vw,120px) 0 36px;border-top:1px solid var(--line)}
   .hero p.lead{font-size:16px}
   .hero-cta{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .hero-cta .btn{padding:0 14px;font-size:14.5px;width:100%}
-  .hero-stage{height:360px;min-height:0;margin-top:0}
-  .sweep-ui{bottom:18px;width:86%}
-  .sweep-ui .labels{font-size:12px}
-  .sweep-ui .hint{font-size:13px;color:#a9a7a1}
-  .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 var(--pad);padding:20px 0 28px;border-top:1px solid var(--line)}
+        .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 var(--pad);padding:20px 0 28px;border-top:1px solid var(--line)}
   /* diensten compact */
   .svc{padding:24px 22px;display:grid;grid-template-columns:48px 1fr;column-gap:16px;align-items:center}
   .svc .num{display:none}
@@ -481,7 +467,6 @@ footer{padding:clamp(70px,9vw,120px) 0 36px;border-top:1px solid var(--line)}
 }
 /* tablet */
 @media (min-width:641px) and (max-width:960px){
-  .hero-stage{height:52svh;min-height:380px}
 }
 body.menu-open{overflow:hidden}
 .wiz,.wiz-top{display:none}
@@ -644,6 +629,23 @@ body.menu-open{overflow:hidden}
 .opt.sz{padding:12px 10px}
 .opt.sz .t{font-size:14px}
 @media (max-width:640px){ .mode-tabs button{padding:0 8px;font-size:14px;gap:6px} .mode-tabs button svg{width:17px;height:17px} .opts.fmt{grid-template-columns:repeat(3,1fr)} .opts.c4:has(.sz){grid-template-columns:repeat(3,1fr)} .opt.sz{padding:12px 8px} .opt.sz .t{font-size:13px;white-space:nowrap} .opt.sz .s{font-size:12px} }
+
+
+.hero-stage{position:relative;display:flex;flex-direction:column;justify-content:center;padding:40px var(--pad) 40px 8px}
+.ba-photo{position:relative;width:100%;aspect-ratio:16/10;border-radius:22px;overflow:hidden;background:#e9e7e2;box-shadow:0 40px 90px rgba(0,0,0,.55);cursor:ew-resize;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.ba-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.ba-photo .ba-voor{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.25);pointer-events:none}
+.ba-handle{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.ba-handle svg{width:22px;height:22px;fill:none;stroke:#0c0c0c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ba-pill{position:absolute;z-index:2;bottom:14px;font-size:11px;font-weight:700;letter-spacing:.14em;padding:7px 13px;border-radius:999px;pointer-events:none}
+.ba-pill.voor{left:14px;background:#0c0c0c;color:#fff}
+.ba-pill.na{right:14px;background:#fff;color:#0c0c0c}
+.ba-range{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.ba-photo:has(.ba-range:focus-visible){outline:2px solid #fff;outline-offset:4px}
+.ba-cap{text-align:center;font-size:13px;color:#8f8d88;margin-top:16px}
+@media (max-width:960px){ .hero-stage{padding:24px var(--pad) 8px} }
+@media (max-width:640px){ .ba-photo{border-radius:16px} .ba-handle{width:40px;height:40px;margin:-20px 0 0 -20px} .ba-cap{font-size:12.5px;margin-top:12px} }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
@@ -705,13 +707,14 @@ body.menu-open{overflow:hidden}
   </div>
 
   <div class="hero-stage">
-    <canvas id="hero3d" aria-label="3D-weergave van een zetel die gereinigd wordt"></canvas>
-    <div class="stage-fallback" id="heroFallback">Je zetel verdient beter.</div>
-    <div class="sweep-ui">
-      <div class="labels"><span>Voor</span><span>Na</span></div>
-      <input type="range" class="sweep" id="sweep" min="0" max="1000" value="0" aria-label="Sleep om de zetel te reinigen">
-      <div class="hint">Sleep om te reinigen · draai de zetel rond</div>
+    <div class="ba-photo" id="baPhoto" style="--p:50%">
+      <img class="ba-na" src="media/hero-na.webp" srcset="media/hero-na-960.webp 960w, media/hero-na.webp 1600w" sizes="(max-width:960px) 100vw, 56vw" width="1600" height="1000" alt="Zetel na de reiniging door The Cleaning Company" fetchpriority="high" decoding="async">
+      <img class="ba-voor" src="media/hero-voor.webp" srcset="media/hero-voor-960.webp 960w, media/hero-voor.webp 1600w" sizes="(max-width:960px) 100vw, 56vw" width="1600" height="1000" alt="Dezelfde zetel vóór de reiniging, met vlekken" decoding="async">
+      <div class="ba-line" aria-hidden="true"><span class="ba-handle"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+      <span class="ba-pill voor" aria-hidden="true">VOOR</span><span class="ba-pill na" aria-hidden="true">NA</span>
+      <input type="range" class="ba-range" id="sweep" min="0" max="100" value="50" aria-label="Schuif om voor en na te vergelijken">
     </div>
+    <p class="ba-cap">Sleep over de foto om voor en na te vergelijken</p>
   </div>
   <div class="hero-meta sm-block">
       <div><strong>Aan huis</strong>Wij komen naar jou</div>
@@ -1081,8 +1084,8 @@ body.menu-open{overflow:hidden}
           <div class="opts c4">
             <label class="opt"><input type="radio" name="vervuiling" value="geen" checked><span class="t">Onderhoud</span><span class="s">Geen echte vlekken</span></label>
             <label class="opt"><input type="radio" name="vervuiling" value="licht"><span class="t">Licht</span><span class="s">Enkele kleine vlekjes</span></label>
-            <label class="opt"><input type="radio" name="vervuiling" value="matig"><span class="t">Matig</span><span class="s">Zichtbare vlekken</span></label>
-            <label class="opt"><input type="radio" name="vervuiling" value="zwaar"><span class="t">Zwaar</span><span class="s">Veel of oude vlekken</span></label>
+            <label class="opt"><input type="radio" name="vervuiling" value="matig"><span class="t">Matig</span><span class="s">Zichtbare vlekken · + € 20</span></label>
+            <label class="opt"><input type="radio" name="vervuiling" value="zwaar"><span class="t">Zwaar</span><span class="s">Veel of oude vlekken · + € 40</span></label>
           </div>
           <div id="stainTypes">
             <div class="sub-lbl">Soort vlekken <span style="font-weight:400">(meerdere mogelijk)</span></div>
@@ -1329,7 +1332,7 @@ body.menu-open{overflow:hidden}
       minimum: 39
     },
     // Vlekken: inbegrepen in de reiniging, enkel urine kost extra
-    stainLevel: { geen:{label:"Onderhoud",amt:0}, licht:{label:"Licht",amt:.5}, matig:{label:"Matig",amt:.78}, zwaar:{label:"Zwaar",amt:1} },
+    stainLevel: { geen:{label:"Onderhoud",amt:0,p:0}, licht:{label:"Licht",amt:.5,p:0}, matig:{label:"Matig",amt:.78,p:20}, zwaar:{label:"Zwaar",amt:1,p:40} },
     stains: {
       koffie:{label:"Koffie / frisdrank",p:0}, wijn:{label:"Rode wijn",p:0}, vet:{label:"Vet / make-up",p:0},
       huisdier:{label:"Urine / braaksel (enzymbehandeling)",p:30}, inkt:{label:"Inkt / stift",p:0}, gebruik:{label:"Gebruiksvlekken (hoofd, armleuning)",p:0}
@@ -1384,6 +1387,8 @@ body.menu-open{overflow:hidden}
     return x.perSeat * Math.max(2, seatsNow());
   }
   function stainLines(lines){
+    const lvl = PRICING.stainLevel[get("vervuiling").value];
+    if(lvl.p) lines.push([`Vervuiling · ${lvl.label.toLowerCase()}`, lvl.p]);
     const stains = getAll("vlekken");
     stains.forEach(k => { if(PRICING.stains[k].p) lines.push([PRICING.stains[k].label, PRICING.stains[k].p]); });
     return stains;
@@ -1667,6 +1672,32 @@ body.menu-open{overflow:hidden}
   const barIO = new IntersectionObserver(es => { es.forEach(en => { vis[en.target === cfg ? "cfg" : en.target === cb ? "cb" : "qc"] = en.isIntersecting; }); updBar(); }, { threshold:0 });
   [cfg, cb, qc].forEach(el => barIO.observe(el));
 
+  /* ---------- hero voor/na-foto ---------- */
+  (function(){
+    const box = $("#baPhoto"), rng = $("#sweep");
+    if(!box) return;
+    let p = 50, anim = null;
+    const set = v => { p = Math.max(0, Math.min(100, v)); box.style.setProperty("--p", p + "%"); rng.value = Math.round(p); };
+    const fromX = x => { const r = box.getBoundingClientRect(); return (x - r.left) / r.width * 100; };
+    let drag = false, sx = 0, sy = 0, decided = false;
+    box.addEventListener("pointerdown", e => { drag = true; decided = e.pointerType !== "touch"; sx = e.clientX; sy = e.clientY; cancelAnimationFrame(anim); if(decided){ box.setPointerCapture(e.pointerId); set(fromX(e.clientX)); } });
+    box.addEventListener("pointermove", e => {
+      if(!drag) return;
+      if(!decided){ const dx = Math.abs(e.clientX-sx), dy = Math.abs(e.clientY-sy); if(dx < 6 && dy < 6) return; if(dy > dx){ drag = false; return; } decided = true; box.setPointerCapture(e.pointerId); }
+      set(fromX(e.clientX));
+    });
+    const end = () => { drag = false; };
+    box.addEventListener("pointerup", end); box.addEventListener("pointercancel", end);
+    rng.addEventListener("input", () => { cancelAnimationFrame(anim); set(+rng.value); });
+    // intro: start volledig "voor", schuif dan naar het midden
+    if(!matchMedia("(prefers-reduced-motion: reduce)").matches){
+      set(100);
+      const img = box.querySelector(".ba-na");
+      const go = () => { const t0 = performance.now(); const step = now => { const k = Math.min(1, (now - t0) / 1600); const e = 1 - Math.pow(1 - k, 3); set(100 - 50 * e); if(k < 1) anim = requestAnimationFrame(step); }; setTimeout(() => anim = requestAnimationFrame(step), 700); };
+      if(img.complete) go(); else img.addEventListener("load", go, { once:true });
+    }
+  })();
+
   // preloader
   const hidePre = () => document.getElementById("preloader").classList.add("done");
   window.addEventListener("tcc:ready", () => setTimeout(hidePre, 350));
@@ -1794,8 +1825,9 @@ function smoothNormals(g){
   gn.needsUpdate = true; t.dispose(); m.dispose();
 }
 const geoCache = new Map();
+let WRINKLE = 0;
 function softBox(w,h,d,r,puff=0,axis="y"){
-  const k = [w,h,d,r,puff,axis].map(v=>typeof v==="number"?v.toFixed(3):v).join("|");
+  const k = [w,h,d,r,puff,axis,WRINKLE].map(v=>typeof v==="number"?v.toFixed(3):v).join("|");
   if(geoCache.has(k)) return geoCache.get(k);
   const seg = isSmall ? 14 : 18;
   const g = new THREE.BoxGeometry(w,h,d,seg,seg,seg);
@@ -1811,6 +1843,13 @@ function softBox(w,h,d,r,puff=0,axis="y"){
     if(puff){
       if(axis==="y" && v.y>0){ const kk=Math.max(0,(1-(v.x/hw)**2))*Math.max(0,(1-(v.z/hd)**2)); v.y += kk*puff*Math.min(1,v.y/hh); }
       if(axis==="z" && v.z>0){ const kk=Math.max(0,(1-(v.x/hw)**2))*Math.max(0,(1-(v.y/hh)**2)); v.z += kk*puff*Math.min(1,v.z/hd); }
+    }
+    if(WRINKLE){
+      const n = Math.sin(v.x*23.1+v.z*7.3)*.5 + Math.sin(v.x*9.7-v.y*17.9+v.z*13.1)*.35 + Math.sin(v.y*31.7+v.x*5.1)*.25;
+      const top = axis==="y" ? Math.max(0, v.y/hh) : Math.max(0, v.z/hd);
+      const len = Math.hypot(v.x,v.y,v.z) || 1;
+      const a = WRINKLE * (.35 + .65*top) * n;
+      v.x += v.x/len*a; v.y += v.y/len*a; v.z += v.z/len*a;
     }
     p.setXYZ(i,v.x,v.y,v.z);
   }
@@ -1843,7 +1882,7 @@ function makeUpholstery(){
       .replace("#include <map_fragment>", `#include <map_fragment>
         vec3 bw = pow(abs(vWn), vec3(2.5)); bw /= (bw.x+bw.y+bw.z);
         vec4 st = texture2D(uStainMap, vWp.zy*.42)*bw.x + texture2D(uStainMap, vWp.xz*.42+.37)*bw.y + texture2D(uStainMap, vWp.xy*.42+.71)*bw.z;
-        float dirty = smoothstep(uSweep-.1, uSweep+.1, vWp.x);
+        float dirty = 1.0 - smoothstep(uSweep-.1, uSweep+.1, vWp.x);
         float sa = clamp(st.a*uStain*dirty, 0.0, 1.0);
         diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb*st.rgb*1.35, sa*.85);
         diffuseColor.rgb *= mix(1.0, .88, uStain*dirty);
@@ -1857,8 +1896,8 @@ function makeUpholstery(){
           diffuseColor.rgb *= .94 + (1.0 - mottle)*.06;
         }`)
       .replace("#include <emissivemap_fragment>", `#include <emissivemap_fragment>
-        float ln = 1.0 - smoothstep(0.0, .035, abs(vWp.x-uSweep));
-        totalEmissiveRadiance += vec3(.85,.93,1.0)*ln*uLine*.55;`);
+        float ln = 1.0 - smoothstep(0.004, .012, abs(vWp.x-uSweep));
+        totalEmissiveRadiance += vec3(1.0)*ln*uLine*.9;`);
   };
   const setKind = kind => {
     const s = kind==="leder" ? surf.leather : (kind==="velours" || kind==="kort" || kind==="viscose") ? surf.velvet : kind==="hoog" ? shaggy() : surf.fabric;
@@ -2004,21 +2043,23 @@ function createStage(canvas, opts){
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = opts.exposure || 1.05;
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.shadowMap.autoUpdate = false;
   const scene = new THREE.Scene();
-  const bg = new THREE.Color(opts.bg || 0x0a0a0a); scene.background = bg; scene.fog = new THREE.Fog(bg, 7, 16);
+  const bg = new THREE.Color(opts.bg || 0x0a0a0a); scene.background = bg; scene.fog = new THREE.Fog(bg, opts.studio ? 9 : 7, opts.studio ? 22 : 16);
   const pm = new THREE.PMREMGenerator(renderer);
   scene.environment = pm.fromScene(new RoomEnvironment(renderer), .04).texture;
 
   const camera = new THREE.PerspectiveCamera(opts.fov || 30, 1, .1, 60);
-  const key = new THREE.DirectionalLight(0xfff4e8, 2.4); key.position.set(3.2,5.5,3.6); key.castShadow = true;
+  const key = new THREE.DirectionalLight(0xfff4e8, opts.studio ? 1.55 : 2.4); key.position.set(...(opts.studio ? [-1.6,6.5,4.2] : [3.2,5.5,3.6])); key.castShadow = true;
+  if(opts.studio){ key.shadow.mapSize.set(2048,2048); key.shadow.normalBias = .03; }
   key.shadow.mapSize.set(isSmall?1024:2048, isSmall?1024:2048); key.shadow.bias = -.0004; key.shadow.normalBias = .02;
   Object.assign(key.shadow.camera, { left:-4, right:4, top:4, bottom:-4, near:.5, far:20 });
   scene.add(key);
-  const rim = new THREE.SpotLight(0xdfe8ff, 26, 14, .6, .8); rim.position.set(-4,3.4,-3.2); rim.target.position.set(0,.4,0); scene.add(rim, rim.target);
-  const fill = new THREE.HemisphereLight(0xffffff, 0x222222, .35); scene.add(fill);
+  const rim = new THREE.SpotLight(0xdfe8ff, opts.studio ? 6 : 26, 14, .6, .8); rim.position.set(-4,3.4,-3.2); rim.target.position.set(0,.4,0); scene.add(rim, rim.target);
+  const fill = opts.studio ? new THREE.HemisphereLight(0xffffff, 0xcfc9bf, 1.05) : new THREE.HemisphereLight(0xffffff, 0x222222, .35); scene.add(fill);
+  if(opts.studio){ const front = new THREE.DirectionalLight(0xffffff, .55); front.position.set(.5,2.2,6); scene.add(front); }
 
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(40,40), new THREE.MeshStandardMaterial({ color:opts.floor || 0x0e0e0e, roughness:.85, metalness:0 }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(40,40), new THREE.MeshStandardMaterial({ color:opts.floor || 0x0e0e0e, roughness:opts.studio ? 1 : .85, metalness:0, envMapIntensity:opts.studio ? .5 : 1 }));
   floor.rotation.x = -Math.PI/2; floor.receiveShadow = true; scene.add(floor);
-  const cs = new THREE.Mesh(new THREE.PlaneGeometry(1,1), new THREE.MeshBasicMaterial({ map:contactShadowTexture(), transparent:true, depthWrite:false, opacity:.9 }));
+  const cs = new THREE.Mesh(new THREE.PlaneGeometry(1,1), new THREE.MeshBasicMaterial({ map:contactShadowTexture(), transparent:true, depthWrite:false, opacity:opts.studio ? .55 : .9 }));
   cs.rotation.x = -Math.PI/2; cs.position.y = .002; scene.add(cs);
 
   const uph = makeUpholstery();
@@ -2041,6 +2082,7 @@ function createStage(canvas, opts){
   function resize(){
     const w = canvas.clientWidth, h = canvas.clientHeight; if(!w || !h) return;
     renderer.setSize(w,h,false); camera.aspect = w/h;
+    if(opts.onResize) opts.onResize(w,h);
     camera.fov = (opts.fov || 30) * (camera.aspect < 1 ? 1.35 : 1);
     camera.updateProjectionMatrix();
     if(sofa) setSofaDistance();
@@ -2068,69 +2110,11 @@ function createStage(canvas, opts){
   return { renderer, scene, camera, uph, setSofa, resize, target, get camDist(){ return camDist; }, get bounds(){ return bounds; }, get visible(){ return visible; }, setSofaDistance };
 }
 
-/* ---------------- HERO ---------------- */
-let ready = false;
-try{
-  const heroCanvas = document.getElementById("hero3d");
-  const sweep = document.getElementById("sweep");
-  const hero = createStage(heroCanvas, { fov:28, distK:1.02 });
-  hero.uph.uniforms.uLine.value = 1;
-  hero.uph.material.color.set(0xcdc6ba);
-  hero.setSofa({ type:"zit3", seats:3, cushions:2, ottoman:false });
-  hero.resize(); hero.setSofaDistance();
-
-  let sweepVal = 0, sweepTarget = 0, autoplay = !reduced;
-  const setSweepUI = v => { sweep.value = Math.round(v*1000); sweep.style.setProperty("--p", (v*100)+"%"); };
-  sweep.addEventListener("input", () => { autoplay = false; sweepTarget = sweep.value/1000; });
-
-  // orbit by drag + mouse parallax
-  let yaw = .55, pitch = .2, yawT = .55, pitchT = .2, drag = null;
-  heroCanvas.addEventListener("pointerdown", e => { drag = { x:e.clientX, y:e.clientY, yaw:yawT, pitch:pitchT }; heroCanvas.setPointerCapture(e.pointerId); });
-  heroCanvas.addEventListener("pointermove", e => {
-    if(drag){ yawT = drag.yaw - (e.clientX-drag.x)*.006; pitchT = THREE.MathUtils.clamp(drag.pitch + (e.clientY-drag.y)*.003, .05, .5); }
-  });
-  heroCanvas.addEventListener("pointerup", () => drag = null);
-  heroCanvas.style.touchAction = "pan-y";
-  let mx = 0, my = 0;
-  addEventListener("pointermove", e => { mx = e.clientX/innerWidth-.5; my = e.clientY/innerHeight-.5; }, { passive:true });
-
-  const t0 = performance.now();
-  const b = hero.bounds;
-  function frameHero(now){
-    const t = (now - t0)/1000;
-    if(autoplay){
-      // dirty → clean reveal, then subtle back-and-forth tease
-      const p = t < 1.2 ? 0 : t < 4.2 ? THREE.MathUtils.smootherstep((t-1.2)/3, 0, 1) : 1;
-      sweepTarget = p * .52;
-      if(t > 4.2) autoplay = false;
-    }
-    sweepVal += (sweepTarget - sweepVal) * .12;
-    setSweepUI(sweepVal);
-    // sweep goes from right (dirty) to left: cleaned region is x > uSweep? -> we clean from right to left
-    const minX = b.min.x - .25, maxX = b.max.x + .25;
-    hero.uph.uniforms.uSweep.value = THREE.MathUtils.lerp(minX, maxX, sweepVal);
-    hero.uph.uniforms.uLine.value = sweepVal > .003 && sweepVal < .997 ? 1 : 0;
-    // camera
-    yaw += (yawT + (drag?0:mx*.12) - yaw) * .06; pitch += (pitchT + (drag?0:my*.05) - pitch) * .06;
-    const dist = hero.camDist;
-    hero.camera.position.set(Math.sin(yaw)*Math.cos(pitch)*dist, hero.target.y + Math.sin(pitch)*dist, Math.cos(yaw)*Math.cos(pitch)*dist);
-    hero.camera.lookAt(hero.target);
-    if(hero.visible) hero.renderer.render(hero.scene, hero.camera);
-    requestAnimationFrame(frameHero);
-  }
-  requestAnimationFrame(frameHero);
-  ready = true;
-}catch(e){
-  console.warn("3D hero niet beschikbaar", e);
-  document.getElementById("heroFallback").style.display = "grid";
-  document.querySelector(".sweep-ui").style.display = "none";
-}
-
 /* ---------------- CONFIGURATOR PREVIEW ---------------- */
 try{
   const canvas = document.getElementById("cfg3d");
   const st = createStage(canvas, { fov:30, distK:1.0, exposure:1.1 });
-  st.uph.uniforms.uSweep.value = -99; st.uph.uniforms.uLine.value = 0;
+  st.uph.uniforms.uSweep.value = 99; st.uph.uniforms.uLine.value = 0;
   const controls = new OrbitControls(st.camera, canvas);
   controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true; controls.dampingFactor = .07;
   controls.minPolarAngle = .6; controls.maxPolarAngle = 1.42; controls.autoRotate = !reduced; controls.autoRotateSpeed = .7;

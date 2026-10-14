@@ -675,10 +675,20 @@ body.menu-open{overflow:hidden}
   .reviews{padding:56px 0}
   .rev-score #revRating{font-size:48px}
   .rev-btns .btn{flex:1}
-  .rev-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--pad));padding:0 var(--pad) 4px;scrollbar-width:none}
+  .rev-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:var(--pad);margin:0 calc(-1*var(--pad));padding:0 var(--pad) 4px;scrollbar-width:none}
   .rev-grid::-webkit-scrollbar{display:none}
   .rev-card{flex:0 0 82vw;scroll-snap-align:start}
 }
+
+a.rev-card{color:inherit;text-decoration:none;transition:border-color .3s,transform .3s var(--ease)}
+a.rev-card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.rev-card .who{position:relative}
+.rev-card .who .ini{color:#fff;font-size:17px}
+.rev-card .who .g{width:20px;height:20px;margin-left:auto;flex:none}
+.rev-grid .rev-card.extra{display:none}
+.rev-grid.all .rev-card.extra{display:flex}
+.rev-more{text-align:center;margin-top:22px}
+@media (max-width:640px){ .rev-grid .rev-card.extra{display:flex} .rev-more{display:none} }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
@@ -942,15 +952,16 @@ body.menu-open{overflow:hidden}
       </div>
       <div class="rev-summary rv d2" id="revSummary">
         <div class="rev-score"><span id="revRating">5,0</span><span class="rev-stars" id="revStars" aria-hidden="true">★★★★★</span></div>
-        <p id="revCount">Tevreden klant? Laat het anderen weten met een review op Google.</p>
+        <p id="revCount">Alle 17 reviews op Google: 5 op 5 sterren. Tevreden klant? Laat het anderen weten.</p>
         <div class="rev-btns">
           <a class="btn btn-light" id="revWrite" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>Schrijf een review</a>
           <a class="btn btn-ghost" id="revAll" target="_blank" rel="noopener">Alle reviews op Google</a>
         </div>
       </div>
     </div>
-    <div class="rev-grid" id="revGrid" hidden></div>
-    <p class="rev-note">Je review plaats je via je Google-account; de knop opent meteen het reviewvenster van Google.</p>
+    <div class="rev-grid" id="revGrid"></div>
+    <div class="rev-more"><button type="button" class="btn btn-ghost" id="revMore">Toon alle reviews</button></div>
+    <p class="rev-note">Echte reviews van ons Google-profiel. Tik op een review om ze op Google te bekijken.</p>
   </div>
 </section>
 
@@ -1674,43 +1685,19 @@ body.menu-open{overflow:hidden}
 
   /* ---------- Google reviews ---------- */
   (function(){
+    const REVIEWS = [{"n": "Lotte De craecker", "t": "Super content met het reinigen van onze zetel! 😍 Echt een mooi resultaat en ne wree sympathieke mens! Wij gaan hem zeker nog contacteren. Dikke aanrader! 👌🏼✨"}, {"n": "thomas de coene", "t": "Super tevreden met het resultaat, zetel en tapijt laten kuisen. Beide zijn zoals nieuw. Charmante eigenaar die top werk levert en heel makkelijk aanspreekbaar is."}, {"n": "Vallery Schermer", "t": "Ik kan niet anders zeggen dat ik super tevreden ben geweest van de service en het reinigen van mijn zetel. Hij zag er weer uit als nieuw! Ik raad hem iedereen aan 🙏"}, {"n": "Thomas Amandels", "t": "Zeer tevreden! Mijn zetel werd grondig gereinigd en het resultaat is heel mooi. Alles werd netjes en professioneel aangepakt. Vriendelijke service en zeker een aanrader!"}, {"n": "Ellen De Rudder", "t": "Super goede service. Onze zetel en tapijt werden gereinigd en we zijn heel tevreden. Ook ne mega wijze kerel!"}, {"n": "Taxi De Wever", "t": "Het interieur van mijn wagen laten reinigen. Prachtig resultaat en aan een eerlijke prijs. Stip correct en tevreden! Tot snel!"}, {"n": "Melissa Berwouts", "t": "Proper werk geleverd! Onze zetel ruikt fris en is vlekvrij. Een afspraak was ook snel geregeld. Merci!"}, {"n": "Timmy Verhaege", "t": "Super tevreden, was op tijd aanwezig, zeer vriendelijk en mijn zetel werd op een professionele manier gereinigd. Zeker een aanrader!"}, {"n": "Amber Toorré", "t": "Heel tevreden over de service! Alles werd netjes en grondig gereinigd. Vlotte communicatie en een prachtig resultaat. Ik raad het zeker aan!"}, {"n": "Ksenya Matais", "t": "Heel erg tevreden! Ons terras en de zetels werden grondig gereinigd. Alles werd stap voor stap duidelijk uitgelegd. …"}, {"n": "K DW", "t": "Mijn zetel zat vol met vlekken en had een vreemde geur, na reinigen met de specifiek producten van thecleaningcompany werd alles verwijderd …"}, {"n": "Naz", "t": "Zeer tevreden over de service! Mijn zetel is prachtig en professioneel gereinigd. Vriendelijke en snelle service. Zeker een aanrader!"}, {"n": "Dimitri Antheunis", "t": "Vlotte service, vriendelijk, mooi eindresultaat. Zetel ziet er terug gelijk nieuw uit. Aanrader!"}, {"n": "Aid Zekaj", "t": "Uitstekend werk geleverd! Zeer professioneel in omgang ook, een toffe kerel met passie in zijn vak"}, {"n": "Robin Verweire", "t": "Heel professionele aanpak, topservice, en topkerel in hart en nieren 😉"}, {"n": "Beau Gheysens", "t": "Top service, onze zetel is gelijk nieuw."}, {"n": "Sharon De Grave", "t": "TOP service!!"}];
     const write = $("#revWrite"), all = $("#revAll");
     const profile = C.googleReviewUrl || (C.googlePlaceId ? "https://www.google.com/maps/place/?q=place_id:" + C.googlePlaceId : "");
-    if(!profile && !C.googlePlaceId){ $("#reviews").remove(); return; }
     write.href = C.googlePlaceId ? "https://search.google.com/local/writereview?placeid=" + encodeURIComponent(C.googlePlaceId) : profile;
     all.href = profile;
-    if(!C.googleApiKey || !C.googlePlaceId){ $("#revRating").parentElement.style.display = "none"; return; }
-    const esc = t => String(t || "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
-    const stars = n => "★★★★★".slice(0, Math.round(n)) + "☆☆☆☆☆".slice(0, 5 - Math.round(n));
-    const load = () => {
-      window.__tccReviews = async () => {
-        try{
-          const { Place } = await google.maps.importLibrary("places");
-          const pl = new Place({ id: C.googlePlaceId, requestedLanguage: "nl" });
-          await pl.fetchFields({ fields: ["rating","userRatingCount","reviews","googleMapsURI"] });
-          if(pl.googleMapsURI && !C.googleReviewUrl) all.href = pl.googleMapsURI;
-          if(pl.rating){
-            $("#revRating").textContent = pl.rating.toFixed(1).replace(".", ",");
-            $("#revStars").textContent = stars(pl.rating);
-            $("#revCount").textContent = `Gemiddeld ${pl.rating.toFixed(1).replace(".", ",")} op 5 uit ${pl.userRatingCount} Google-reviews.`;
-          } else $("#revRating").parentElement.style.display = "none";
-          const revs = (pl.reviews || []).filter(r => r.rating >= 4 && (r.text || "").trim());
-          if(revs.length){
-            $("#revGrid").innerHTML = revs.slice(0, 6).map(r => {
-              const a = r.authorAttribution || {}, name = esc(a.displayName || "Google-gebruiker");
-              const pic = a.photoURI ? `<img src="${esc(a.photoURI)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="ini">${name.charAt(0)}</span>`;
-              return `<article class="rev-card"><div class="who">${pic}<div><b>${name}</b><small>${esc(r.relativePublishTimeDescription || "")}</small></div></div><div class="st" aria-label="${r.rating} op 5">${stars(r.rating)}</div><p>${esc(r.text)}</p></article>`;
-            }).join("");
-            $("#revGrid").hidden = false;
-          }
-        }catch(e){ console.warn("Google reviews niet geladen", e); $("#revRating").parentElement.style.display = "none"; }
-      };
-      const sc = document.createElement("script");
-      sc.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(C.googleApiKey)}&v=weekly&loading=async&language=nl&callback=__tccReviews`;
-      sc.async = true; document.head.appendChild(sc);
-    };
-    const io = new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)){ io.disconnect(); load(); } }, { rootMargin:"400px" });
-    io.observe($("#reviews"));
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+    const cols = ["#5f6368","#1a73e8","#188038","#a142f4","#c5221f","#e37400","#007b83","#8e5b3c"];
+    const g = '<svg class="g" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.6 12.3c0-.8-.1-1.5-.2-2.3H12v4.3h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1-3.7 1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2.1a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>';
+    $("#revGrid").innerHTML = REVIEWS.map((r,i) => `<a class="rev-card${i >= 6 ? " extra" : ""}" href="${esc(profile)}" target="_blank" rel="noopener" aria-label="Review van ${esc(r.n)} op Google bekijken">
+      <div class="who"><span class="ini" style="background:${cols[i % cols.length]}">${esc(r.n.charAt(0).toUpperCase())}</span><div><b>${esc(r.n)}</b><small>Review op Google</small></div>${g}</div>
+      <div class="st" aria-label="5 op 5 sterren">★★★★★</div><p>${esc(r.t)}</p></a>`).join("");
+    const more = $("#revMore");
+    more.addEventListener("click", () => { const open = $("#revGrid").classList.toggle("all"); more.textContent = open ? "Toon minder" : "Toon alle reviews"; });
   })();
 
   /* ---------- resultaten: rail, video's, lightbox ---------- */

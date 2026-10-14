@@ -50,7 +50,11 @@ window.TCC_CONFIG = {
   address:   "Sente Clarenhof 18-202, 9050 Ledeberg (Gent)",
   btw:       "BE 1040.927.289",
   instagram: "https://www.instagram.com/thecleaningcompany.hobi/",
-  facebook:  "https://www.facebook.com/share/1JXTaEpGSP/"
+  facebook:  "https://www.facebook.com/share/1JXTaEpGSP/",
+  // ---- GOOGLE REVIEWS ----
+  googleReviewUrl: "https://share.google/SWDBZsvCvXB154yJ8", // link naar het Google-bedrijfsprofiel
+  googlePlaceId:   "",   // bv. "ChIJ..." → maakt de knop 'Schrijf een review' rechtstreeks
+  googleApiKey:    ""    // Google Maps API-sleutel (Places API New), beperkt tot dit domein → toont live reviews
 };
 </script>
 
@@ -646,6 +650,35 @@ body.menu-open{overflow:hidden}
 .ba-cap{text-align:center;font-size:13px;color:#8f8d88;margin-top:16px}
 @media (max-width:960px){ .hero-stage{padding:24px var(--pad) 8px} }
 @media (max-width:640px){ .ba-photo{border-radius:16px} .ba-handle{width:40px;height:40px;margin:-20px 0 0 -20px} .ba-cap{font-size:12.5px;margin-top:12px} }
+
+.reviews{border-top:1px solid var(--line)}
+.ghost-h{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.85)}
+.rev-summary{justify-self:end;width:100%;max-width:540px}
+.rev-summary p{max-width:none!important}
+.rev-score{display:flex;align-items:center;gap:16px}
+.rev-score #revRating{font-family:var(--display);font-weight:800;font-size:64px;line-height:1;letter-spacing:-.02em}
+.rev-stars{color:#f5c04a;font-size:26px;letter-spacing:2px}
+.rev-summary p{color:var(--muted);margin-top:10px;font-size:16px}
+.rev-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.rev-btns .btn svg{width:18px;height:18px}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rev-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);display:flex;flex-direction:column;gap:14px}
+.rev-card .who{display:flex;align-items:center;gap:12px}
+.rev-card .who img,.rev-card .who .ini{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#2a2a2a;display:grid;place-items:center;font-weight:700}
+.rev-card .who b{display:block;font-size:15px}
+.rev-card .who small{color:var(--dim);font-size:12.5px}
+.rev-card .st{color:#f5c04a;letter-spacing:2px}
+.rev-card p{color:#cfcdc7;font-size:15px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.rev-note{color:var(--dim);font-size:13px;margin-top:22px}
+@media (max-width:960px){ .rev-summary{justify-self:start} .rev-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:640px){
+  .reviews{padding:56px 0}
+  .rev-score #revRating{font-size:48px}
+  .rev-btns .btn{flex:1}
+  .rev-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*var(--pad));padding:0 var(--pad) 4px;scrollbar-width:none}
+  .rev-grid::-webkit-scrollbar{display:none}
+  .rev-card{flex:0 0 82vw;scroll-snap-align:start}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
@@ -898,6 +931,28 @@ body.menu-open{overflow:hidden}
   <div class="lb-body" id="lbBody"></div>
   <button type="button" class="lb-nav lb-next" id="lbNext" aria-label="Volgende">→</button>
 </dialog>
+
+<!-- ================= REVIEWS ================= -->
+<section class="sec reviews" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow rv">Google reviews</span>
+        <h2 class="rv d1">Wat klanten<br><span class="ghost-h">zeggen.</span></h2>
+      </div>
+      <div class="rev-summary rv d2" id="revSummary">
+        <div class="rev-score"><span id="revRating">5,0</span><span class="rev-stars" id="revStars" aria-hidden="true">★★★★★</span></div>
+        <p id="revCount">Tevreden klant? Laat het anderen weten met een review op Google.</p>
+        <div class="rev-btns">
+          <a class="btn btn-light" id="revWrite" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>Schrijf een review</a>
+          <a class="btn btn-ghost" id="revAll" target="_blank" rel="noopener">Alle reviews op Google</a>
+        </div>
+      </div>
+    </div>
+    <div class="rev-grid" id="revGrid" hidden></div>
+    <p class="rev-note">Je review plaats je via je Google-account; de knop opent meteen het reviewvenster van Google.</p>
+  </div>
+</section>
 
 <!-- ================= WERKWIJZE ================= -->
 <section class="sec paper" id="werkwijze">
@@ -1279,7 +1334,7 @@ body.menu-open{overflow:hidden}
     </div>
     <div class="foot-bottom">
       <span>© <span id="year">2026</span> The Cleaning Company · Hobi Temmerman<span data-needs="address"> · <span data-cfg="address"></span></span><span data-needs="btw"> · BTW <span data-cfg="btw"></span></span></span>
-      <nav aria-label="Footer"><a href="#diensten">Diensten</a><a href="#resultaten">Resultaten</a><a href="#offerte">Offerte</a><a href="#faq">FAQ</a><a data-cfg="instagram" target="_blank" rel="noopener">Instagram</a><a data-needs="facebook" data-cfg="facebook" target="_blank" rel="noopener">Facebook</a></nav>
+      <nav aria-label="Footer"><a href="#diensten">Diensten</a><a href="#resultaten">Resultaten</a><a href="#reviews">Reviews</a><a href="#offerte">Offerte</a><a href="#faq">FAQ</a><a data-cfg="instagram" target="_blank" rel="noopener">Instagram</a><a data-needs="facebook" data-cfg="facebook" target="_blank" rel="noopener">Facebook</a></nav>
       <span>Website door <a href="https://marleo.tech" target="_blank" rel="noopener">Marleo</a></span>
     </div>
   </div>
@@ -1616,6 +1671,47 @@ body.menu-open{overflow:hidden}
   });
   mqW.addEventListener("change", () => showStep(wCur, false));
   setMode("zetel", false);
+
+  /* ---------- Google reviews ---------- */
+  (function(){
+    const write = $("#revWrite"), all = $("#revAll");
+    const profile = C.googleReviewUrl || (C.googlePlaceId ? "https://www.google.com/maps/place/?q=place_id:" + C.googlePlaceId : "");
+    if(!profile && !C.googlePlaceId){ $("#reviews").remove(); return; }
+    write.href = C.googlePlaceId ? "https://search.google.com/local/writereview?placeid=" + encodeURIComponent(C.googlePlaceId) : profile;
+    all.href = profile;
+    if(!C.googleApiKey || !C.googlePlaceId){ $("#revRating").parentElement.style.display = "none"; return; }
+    const esc = t => String(t || "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+    const stars = n => "★★★★★".slice(0, Math.round(n)) + "☆☆☆☆☆".slice(0, 5 - Math.round(n));
+    const load = () => {
+      window.__tccReviews = async () => {
+        try{
+          const { Place } = await google.maps.importLibrary("places");
+          const pl = new Place({ id: C.googlePlaceId, requestedLanguage: "nl" });
+          await pl.fetchFields({ fields: ["rating","userRatingCount","reviews","googleMapsURI"] });
+          if(pl.googleMapsURI && !C.googleReviewUrl) all.href = pl.googleMapsURI;
+          if(pl.rating){
+            $("#revRating").textContent = pl.rating.toFixed(1).replace(".", ",");
+            $("#revStars").textContent = stars(pl.rating);
+            $("#revCount").textContent = `Gemiddeld ${pl.rating.toFixed(1).replace(".", ",")} op 5 uit ${pl.userRatingCount} Google-reviews.`;
+          } else $("#revRating").parentElement.style.display = "none";
+          const revs = (pl.reviews || []).filter(r => r.rating >= 4 && (r.text || "").trim());
+          if(revs.length){
+            $("#revGrid").innerHTML = revs.slice(0, 6).map(r => {
+              const a = r.authorAttribution || {}, name = esc(a.displayName || "Google-gebruiker");
+              const pic = a.photoURI ? `<img src="${esc(a.photoURI)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<span class="ini">${name.charAt(0)}</span>`;
+              return `<article class="rev-card"><div class="who">${pic}<div><b>${name}</b><small>${esc(r.relativePublishTimeDescription || "")}</small></div></div><div class="st" aria-label="${r.rating} op 5">${stars(r.rating)}</div><p>${esc(r.text)}</p></article>`;
+            }).join("");
+            $("#revGrid").hidden = false;
+          }
+        }catch(e){ console.warn("Google reviews niet geladen", e); $("#revRating").parentElement.style.display = "none"; }
+      };
+      const sc = document.createElement("script");
+      sc.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(C.googleApiKey)}&v=weekly&loading=async&language=nl&callback=__tccReviews`;
+      sc.async = true; document.head.appendChild(sc);
+    };
+    const io = new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)){ io.disconnect(); load(); } }, { rootMargin:"400px" });
+    io.observe($("#reviews"));
+  })();
 
   /* ---------- resultaten: rail, video's, lightbox ---------- */
   const rail = $("#rail"), items = [...rail.querySelectorAll(".res")];
